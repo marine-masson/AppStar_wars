@@ -1,0 +1,21 @@
+{
+  "name": "tony/app-cart",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Antoine07",
+      "email": "antoine.lucsko@wanadoo.fr"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload":{
+    "classmap" : [
+      "src"
+    ],
+    "psr-4" :{
+      "" : "src/"
+    }
+  }
+
+}
