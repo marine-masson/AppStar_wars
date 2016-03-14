@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 USERNAME='root'
 PASSWORD=''
-DBNAME='db_starwars'
+DBNAME='app_starwars'
 HOST='localhost'
 
-USER_USERNAME='yoda'
-USER_PASSWORD='yoda'
+USER_USERNAME='marine'
+USER_PASSWORD='marine'
 
 MySQL=$(cat <<EOF
 DROP DATABASE IF EXISTS $DBNAME;
@@ -17,5 +17,10 @@ EOF
 
 echo $MySQL | mysql --user=$USERNAME --password=$PASSWORD
 
-php ./database/migrations.php;
-php ./database/seeds.php;
+ php artisan migrate:refresh --seed
+
+
+
+
+
+

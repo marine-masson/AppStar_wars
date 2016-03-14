@@ -1,4 +1,9 @@
-.idea/
 /vendor
 /node_modules
+Homestead.yaml
+Homestead.json
+.env
+.idea/
 composer.lock
+public/uploads/*.[a-z]*
+storage

@@ -1,51 +1,52 @@
-'use strict';
-
-var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    minify = require('gulp-minify-css'),
-    concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
-    uglify = require('gulp-uglify');
+var gulp    = require('gulp'),
+    sass    = require('gulp-sass'),
+    minify  = require('gulp-minify-css'),
+    concat  = require('gulp-concat'),
+    uglify  = require('gulp-uglify'),
+    rename  = require('gulp-rename');
 
 var path = {
-    'resources': {
-        'sass': './resources/assets/sass',
-        'js': './resources/assets/js',
-    },
 
-    'public': {
-        'css': './public/assets/css',
-        'js': './public/assets/js',
-
+    'resources' : {
+        'sass':'./resources/assets/sass'
     },
-    'sass': './resources/assets/sass/**/*.scss',
-    'js': './resources/assets/js/**/*.js'
+    'public' : {
+        'css':'./public/assets/css'
+    },
+    'sass' : './resources/assets/sass/**/*.scss'
+
 };
 
-gulp.task('sass', function () {
+// knacss compilation
 
-    return gulp.src(path.resources.sass + '/app.scss')
+gulp.task('knacss', function(){
+   return gulp.src(path.resources.sass+'/knacss/sass/knacss.scss')
+       .pipe(sass({
+           onError : console.error.bind(console,'SASS ERROR')
+       }))
+       .pipe(minify())
+       .pipe(rename({suffix:'.min'}))
+       .pipe(gulp.dest(path.public.css))
+});
+
+// App compilation
+
+gulp.task('app', function(){
+    return gulp.src(path.resources.sass+'/app.scss')
         .pipe(sass({
-            onError: console.error.bind(console, 'SASS ERROR')
+            onError : console.error.bind(console,'SASS ERROR')
         }))
         .pipe(minify())
-        .pipe(rename({suffix: '.min'}))
+        .pipe(rename({suffix:'.min'}))
         .pipe(gulp.dest(path.public.css))
-
 });
 
-gulp.task('js', function () {
-    return gulp.src([
-        path.resources.js + '/app.js'
-    ])
-        .pipe(uglify())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(path.public.js));
-});
 
-gulp.task('watch', function () {
-    gulp.watch(path.sass, ['sass']);
-    gulp.watch(path.js, ['js']);
+// WATCH
+
+gulp.task('watch',function(){
+    gulp.watch(path.sass, ['knacss']);
+    gulp.watch(path.sass, ['app']);
 });
 
 gulp.task('default', ['watch']);
